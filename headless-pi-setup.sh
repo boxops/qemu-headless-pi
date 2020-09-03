@@ -26,16 +26,16 @@ RASPILATEST=https://downloads.raspberrypi.org/raspios_lite_armhf_latest
 if [ -f $ZIPPATH ]; then echo "### $ZIPPATH exist."; else wget -P $DOWNLOADPATH $RASPILATEST ; fi
 
 #check if a RasPiOS Lite image exist, inflate a downloaded file if not
-IMGPATH=/home/$USER/Downloads/*-raspios-*-lite-*.img
+IMGPATH=$(find /home/$USER/Downloads/*raspios*lite*.img)
 if [ -f $IMGPATH ]; then echo "### $IMGPATH exist."; else unzip $ZIPPATH -d $DOWNLOADPATH ; fi
 #example inflated image: 2020-05-27-raspios-buster-lite-armhf.img
 
 #make the partition available
-#echo ", +" | sfdisk -N 2 /home/$USER/Downloads/*-raspios-*-lite-*.img
+#echo ", +" | sfdisk -N 2 /home/$USER/Downloads/*raspios*lite*.img
 echo ", +" | sfdisk -N 2 $IMGPATH
 
 #attach the image to a loop device, shows path e.g. /dev/loop13
-#sudo losetup -fP --show /home/$USER/Downloads/*-raspios-*-lite-*.img
+#sudo losetup -fP --show /home/$USER/Downloads/*raspios*lite*.img
 LOPATH=$(sudo losetup -fP --show $IMGPATH)
 
 #tell the kernel about partitions
@@ -46,7 +46,7 @@ sudo partx -a $LOPATH
 #show partitions: lsblk /dev/loop13
 
 #extend the disk image size
-#sudo qemu-img resize /home/$USER/Downloads/*-raspios-*-lite-*.img 2G
+#sudo qemu-img resize /home/$USER/Downloads/*raspios*lite*.img 2G
 sudo qemu-img resize $IMGPATH 2G
 
 LOPART1="${LOPATH}p1"
@@ -104,4 +104,3 @@ sudo rm -r $PIROOT
 sudo losetup -d $LOPATH
 
 echo "### Configuration Done, Exiting Script ###"
-
