@@ -31,5 +31,4 @@ for d in rc2.d rc3.d rc4.d rc5.d; do (cd /etc/$d; ln -sf ../init.d/ssh S01ssh); 
   find /etc/rc* -name 'K*ssh' -exec rm {} +
 
 echo "### Enabled SSH ###"
-
 echo "### Exiting systemd-nspawn container ###"
