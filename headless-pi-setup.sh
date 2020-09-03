@@ -6,13 +6,8 @@
 #the script will attempt to write the configured image to an SD card if 'WRITESD=True' at the end of the script
 #if 'WRITESD=True', then ensure to format your SD card before running this script to avoid failures
 
-#assuming that the github repository was downloaded, download it if not
-DOWNLOADPATH=/home/$USER/Downloads/qemu-headless-pi
-GITURL=https://github.com/deadmanhide/qemu-headless-pi
-if [ -d $DOWNLOADPATH ]; then echo "### qemu-rpi-kernel repository is present"; else echo "### Downloading qemu-rpi-kernel git repository" && git clone $GITURL $DOWNLOADPATH; fi
-
 #check if pi-config.txt file exist, exit script otherwise
-CONFIGPATH=/home/$USER/Downloads/qemu-headless-pi/pi-config.txt
+CONFIGPATH=pi-config.txt
 if [ -f "$CONFIGPATH" ]; then echo "### Config file is present."; else echo "### Config file is NOT present. Exiting Script"; exit 1; fi
 
 #update system
