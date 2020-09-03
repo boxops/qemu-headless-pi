@@ -1,6 +1,11 @@
-DRIVEPATH=/home/deadmanhide/Downloads/2020-05-27-raspios-buster-lite-armhf.img
-DTBPATH=/home/deadmanhide/Documents/FYP/Project-practice/qemu-rpi-kernel/versatile-pb-buster-5.4.51.dtb
-KERNELPATH=/home/deadmanhide/Documents/FYP/Project-practice/qemu-rpi-kernel/kernel-qemu-5.4.51-buster
+DOWNLOADPATH=/home/$USER/Downloads/qemu-rpi-kernel
+GITURL=https://github.com/dhruvvyas90/qemu-rpi-kernel
+
+if [ -d $DOWNLOADPATH ]; then echo "### qemu-rpi-kernel folder exists"; else echo "### Downloading qemu-rpi-kernel git repository" && git clone $GITURL $DOWNLOADPATH; fi
+
+DRIVEPATH=/home/$USER/Downloads/2020-05-27-raspios-buster-lite-armhf.img
+DTBPATH=/home/$USER/Downloads/qemu-rpi-kernel/versatile-pb-buster-5.4.51.dtb
+KERNELPATH=/home/$USER/Downloads/qemu-rpi-kernel/kernel-qemu-5.4.51-buster
 
 qemu-system-arm \
 -M versatilepb \
@@ -15,4 +20,3 @@ qemu-system-arm \
 -append "console=ttyAMA0 root=/dev/vda2 panic=1 rootfstype=ext4 rw" \
 -net nic,id=eth0 \
 -no-reboot
-
