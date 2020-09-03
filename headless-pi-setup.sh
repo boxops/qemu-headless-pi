@@ -6,8 +6,13 @@
 #the script will attempt to write the configured image to an SD card if 'WRITESD=True' at the end of the script
 #if 'WRITESD=True', then ensure to format your SD card before running this script to avoid failures
 
+#assuming that the github repository was downloaded, download it if not
+DOWNLOADPATH=/home/$USER/Downloads/qemu-headless-pi
+GITURL=https://github.com/deadmanhide/qemu-headless-pi
+if [ -d $DOWNLOADPATH ]; then echo "### qemu-rpi-kernel repository is present"; else echo "### Downloading qemu-rpi-kernel git repository" && git clone $GITURL $DOWNLOADPATH; fi
+
 #check if pi-config.txt file exist, exit script otherwise
-CONFIGPATH=/home/deadmanhide/Documents/FYP/Project-practice/pi-config.txt
+CONFIGPATH=/home/$USER/Downloads/qemu-headless-pi/pi-config.txt
 if [ -f "$CONFIGPATH" ]; then echo "### Config file is present."; else echo "### Config file is NOT present. Exiting Script"; exit 1; fi
 
 #update system
@@ -20,22 +25,22 @@ for item in $REQPKG; do PKGCHECK=$(dpkg-query -W --showformat='${Status}\n' $ite
   if [ "$PKGCHECK" = "install ok installed" ]; then echo "### $item is installed."; else echo "### Installing $item" && sudo apt-get install $item -y; fi; done
 
 #check if a RasPiOS Lite zip file exist, download the latest version if not
-ZIPPATH=/home/deadmanhide/Downloads/raspios_lite_armhf_latest
-DOWNLOADPATH=/home/deadmanhide/Downloads/
+ZIPPATH=/home/$USER/Downloads/raspios_lite_armhf_latest
+DOWNLOADPATH=/home/$USER/Downloads/
 RASPILATEST=https://downloads.raspberrypi.org/raspios_lite_armhf_latest
 if [ -f $ZIPPATH ]; then echo "### $ZIPPATH exist."; else wget -P $DOWNLOADPATH $RASPILATEST ; fi
 
 #check if a RasPiOS Lite image exist, inflate a downloaded file if not
-IMGPATH=/home/deadmanhide/Downloads/*-raspios-*-lite-*.img
+IMGPATH=/home/$USER/Downloads/*-raspios-*-lite-*.img
 if [ -f $IMGPATH ]; then echo "### $IMGPATH exist."; else unzip $ZIPPATH -d $DOWNLOADPATH ; fi
 #example inflated image: 2020-05-27-raspios-buster-lite-armhf.img
 
 #make the partition available
-#echo ", +" | sfdisk -N 2 /home/deadmanhide/Downloads/*-raspios-*-lite-*.img
+#echo ", +" | sfdisk -N 2 /home/$USER/Downloads/*-raspios-*-lite-*.img
 echo ", +" | sfdisk -N 2 $IMGPATH
 
 #attach the image to a loop device, shows path e.g. /dev/loop13
-#sudo losetup -fP --show /home/deadmanhide/Downloads/*-raspios-*-lite-*.img
+#sudo losetup -fP --show /home/$USER/Downloads/*-raspios-*-lite-*.img
 LOPATH=$(sudo losetup -fP --show $IMGPATH)
 
 #tell the kernel about partitions
@@ -46,7 +51,7 @@ sudo partx -a $LOPATH
 #show partitions: lsblk /dev/loop13
 
 #extend the disk image size
-#sudo qemu-img resize /home/deadmanhide/Downloads/*-raspios-*-lite-*.img 2G
+#sudo qemu-img resize /home/$USER/Downloads/*-raspios-*-lite-*.img 2G
 sudo qemu-img resize $IMGPATH 2G
 
 LOPART1="${LOPATH}p1"
@@ -80,7 +85,7 @@ df -h $PIROOT
 ################## Launch container to configure RasPiOS ##################
 
 #start the systemd-nspawn container and pass commands to it from pi-config.txt file, default user is root (root@path:~#)
-#cat /home/deadmanhide/Documents/FYP/Project-practice/pi-config.txt | \
+#cat /home/$USER/Documents/FYP/Project-practice/pi-config.txt | \
 # sudo systemd-nspawn \
 # -q \
 # --bind /usr/bin/qemu-arm-static \
@@ -104,7 +109,7 @@ sudo rm -r $PIROOT
 sudo losetup -d $LOPATH
 
 #if True, write the RasPiOS image to an SD card
-WRITEIMG=$(find /home/deadmanhide/Downloads/*-raspios-*-lite-*.img)
+WRITEIMG=$(find /home/$USER/Downloads/*-raspios-*-lite-*.img)
 WRITESD=False
 SDPATH=/dev/sdc
 
@@ -112,4 +117,3 @@ if [ $WRITESD = True ]; then echo "### Writing RasPiOS to SD card..." && sudo dd
 if [ $WRITESD = False ]; then echo "### Not Writing RasPiOS to SD card..." ; fi
 
 echo "### Configuration Done, Exiting Script ###"
-
