@@ -15,8 +15,9 @@ username: pi
 
 password: raspberry
 
-Step 4. (Optional) Run 'write-to-SD.sh' without an argument to write the modified RasPiOS image to an SD card. 
- 
+Step 4. Run 'write-to-SD.sh' without an argument to write the modified RasPiOS image to an SD card: ./write-to-SD.sh
+
+Don't forget to format your SD card before running the 'write-to-SD.sh' script. 
 
 
 All tools and repositories in this project are open source and free to use.
