@@ -108,12 +108,5 @@ sudo rm -r $PIROOT
 #sudo losetup -d /dev/loop13
 sudo losetup -d $LOPATH
 
-#if True, write the RasPiOS image to an SD card
-WRITEIMG=$(find /home/$USER/Downloads/*-raspios-*-lite-*.img)
-WRITESD=False
-SDPATH=/dev/sdc
-
-if [ $WRITESD = True ]; then echo "### Writing RasPiOS to SD card..." && sudo dd if=$WRITEIMG of=$SDPATH bs=4M oflag=dsync status=progress ; fi
-if [ $WRITESD = False ]; then echo "### Not Writing RasPiOS to SD card..." ; fi
-
 echo "### Configuration Done, Exiting Script ###"
+
