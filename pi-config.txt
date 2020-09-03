@@ -1,0 +1,35 @@
+echo "### Successfully launched RasPiOS in a systemd-nspawn container"
+echo -n "I am " && whoami
+
+tee -a /etc/network/interfaces > /dev/null <<EOL
+#allow-hotplug wlan0
+#iface wlan0 inet dhcp
+#wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+
+allow-hotplug eth0
+#iface eth0 inet dhcp
+iface eth0 inet static
+address 192.168.1.240
+netmask 255.255.255.0
+gateway 192.168.1.1
+dns-nameservers 8.8.8.8 8.8.4.4
+
+#static ip route config if using a different network
+up route add -net 0.0.0.0/0 gw 192.168.1.1 dev eth0
+
+#release / renew address
+#sudo dhclient -r wlan0
+#sudo dhclient wlan0
+EOL
+
+cat /etc/network/interfaces
+echo "### Appended network configuration to /etc/network/interfaces ###"
+
+ln -s /lib/systemd/system/ssh.service /etc/systemd/system/sshd.service
+ln -s /lib/systemd/system/ssh.service /etc/systemd/system/multi-user.target.wants/ssh.service
+for d in rc2.d rc3.d rc4.d rc5.d; do (cd /etc/$d; ln -sf ../init.d/ssh S01ssh); done
+  find /etc/rc* -name 'K*ssh' -exec rm {} +
+
+echo "### Enabled SSH ###"
+
+echo "### Exiting systemd-nspawn container ###"
