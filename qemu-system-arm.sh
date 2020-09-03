@@ -3,7 +3,7 @@ GITURL=https://github.com/dhruvvyas90/qemu-rpi-kernel
 
 if [ -d $DOWNLOADPATH ]; then echo "### qemu-rpi-kernel folder exists"; else echo "### Downloading qemu-rpi-kernel git repository" && git clone $GITURL $DOWNLOADPATH; fi
 
-DRIVEPATH=/home/$USER/Downloads/2020-05-27-raspios-buster-lite-armhf.img
+DRIVEPATH=$(find /home/$USER/Downloads/*raspios*lite*.img)
 DTBPATH=/home/$USER/Downloads/qemu-rpi-kernel/versatile-pb-buster-5.4.51.dtb
 KERNELPATH=/home/$USER/Downloads/qemu-rpi-kernel/kernel-qemu-5.4.51-buster
 
