@@ -26,7 +26,7 @@ RASPILATEST=https://downloads.raspberrypi.org/raspios_lite_armhf_latest
 if [ -f $ZIPPATH ]; then echo "### $ZIPPATH exist."; else wget -P $DOWNLOADPATH $RASPILATEST ; fi
 
 #check if a RasPiOS Lite image exist, inflate a downloaded file if not
-IMGPATH=$(find /home/$USER/Downloads/*raspios*lite*.img)
+IMGPATH=/home/$USER/Downloads/*raspios*lite*.img
 if [ -f $IMGPATH ]; then echo "### $IMGPATH exist."; else unzip $ZIPPATH -d $DOWNLOADPATH ; fi
 #example inflated image: 2020-05-27-raspios-buster-lite-armhf.img
 
