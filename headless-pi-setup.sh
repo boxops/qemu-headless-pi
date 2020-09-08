@@ -20,13 +20,13 @@ for item in $REQPKG; do PKGCHECK=$(dpkg-query -W --showformat='${Status}\n' $ite
   if [ "$PKGCHECK" = "install ok installed" ]; then echo "### $item is installed."; else echo "### Installing $item" && sudo apt-get install $item -y; fi; done
 
 #check if a RasPiOS Lite zip file exist, download the latest version if not
-ZIPPATH=/home/$USER/Downloads/raspios_lite_armhf_latest
-DOWNLOADPATH=/home/$USER/Downloads/
+ZIPPATH="$(pwd)/raspios_lite_armhf_latest"
+DOWNLOADPATH=$(pwd)
 RASPILATEST=https://downloads.raspberrypi.org/raspios_lite_armhf_latest
 if [ -f $ZIPPATH ]; then echo "### $ZIPPATH exist."; else wget -P $DOWNLOADPATH $RASPILATEST ; fi
 
 #check if a RasPiOS Lite image exist, inflate a downloaded file if not
-IMGPATH=/home/$USER/Downloads/*raspios*lite*.img
+IMGPATH="$(pwd)/*raspios*lite*.img"
 if [ -f $IMGPATH ]; then echo "### $IMGPATH exist."; else unzip $ZIPPATH -d $DOWNLOADPATH ; fi
 #example inflated image: 2020-05-27-raspios-buster-lite-armhf.img
 
