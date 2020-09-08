@@ -104,3 +104,8 @@ sudo rm -r $PIROOT
 sudo losetup -d $LOPATH
 
 echo "### Configuration Done, Exiting Script ###"
+
+#Keep in mind that resizing the RasPiOS will be required after writing the image to an SD card to make the Pi usable
+#To resize the OS on a Raspberry Pi:
+#sudo raspi-config
+#Select: Advanced Options > Expand Filesystem, then Finish and Reboot
