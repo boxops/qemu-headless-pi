@@ -3,7 +3,7 @@ Configure a RasPiOS image in a systemd-nspawn jail and test configuration using 
 
 Step 1. Customise your 'pi-config.txt' by modifying interface IP addresses and static routes to your needs.
 
-Ensure that files have execute permissions: 'sudo chmod 700 headless-pi-setup.sh qemu-system-arm.sh write-to-SD.sh'
+Ensure that files have execute permissions: sudo chmod 700 headless-pi-setup.sh qemu-system-arm.sh write-to-SD.sh
 
 Step 2. Run 'headless-pi-setup.sh' without an argument: ./headless-pi-setup.sh
 
