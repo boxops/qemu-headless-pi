@@ -1,11 +1,11 @@
-DOWNLOADPATH=/home/$USER/Downloads/qemu-rpi-kernel
+DOWNLOADPATH="$(pwd)/qemu-rpi-kernel"
 GITURL=https://github.com/dhruvvyas90/qemu-rpi-kernel
 
 if [ -d $DOWNLOADPATH ]; then echo "### qemu-rpi-kernel folder exists"; else echo "### Downloading qemu-rpi-kernel git repository" && git clone $GITURL $DOWNLOADPATH; fi
 
-DRIVEPATH=$(find /home/$USER/Downloads/*raspios*lite*.img)
-DTBPATH=/home/$USER/Downloads/qemu-rpi-kernel/versatile-pb-buster-5.4.51.dtb
-KERNELPATH=/home/$USER/Downloads/qemu-rpi-kernel/kernel-qemu-5.4.51-buster
+DRIVEPATH=$(readlink -f "$(find . -name "*raspios*lite*.img")")
+DTBPATH=$(readlink -f "$(find qemu-rpi-kernel -name "versatile-pb-buster-5.4.51.dtb")")
+KERNELPATH=$(readlink -f "$(find qemu-rpi-kernel -name "kernel-qemu-5.4.51-buster")")
 
 qemu-system-arm \
 -M versatilepb \
