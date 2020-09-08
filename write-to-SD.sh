@@ -12,3 +12,15 @@ if [ $WRITESD = True ]; then echo "### Writing RasPiOS to SD card..." && sudo dd
 sudo udisksctl unmount -b "${SDPATH}1"
 sudo udisksctl unmount -b "${SDPATH}2"
 sudo udisksctl power-off -b $SDPATH
+
+#Remove the SD card and place it in a Raspberry Pi 4B
+#Connect the pi to your network using an Ethernet cable and power on
+#SSH into the Pi once it is booted up:
+#ssh pi@192.168.1.240
+#username: pi
+#password: raspberry
+#It is important to resize the filesystem after connecting to the Raspberry Pi for the first time
+#To resize the OS on a Raspberry Pi:
+#sudo raspi-config
+#Select: Advanced Options > Expand Filesystem, then Finish and Reboot
+
