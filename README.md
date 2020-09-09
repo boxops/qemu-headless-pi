@@ -39,5 +39,11 @@ sudo raspi-config
 
 Select: Advanced Options > Expand Filesystem, then Finish and Reboot
 
+Alternatively, resize the filesystem with commands:
+
+sudo raspi-config nonint do_expand_rootfs
+
+sudo shutdown -r now
+
 All tools and repositories in this project are open source and free to use.
 Enjoy and have fun.
