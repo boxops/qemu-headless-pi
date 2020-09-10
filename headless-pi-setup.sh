@@ -8,7 +8,10 @@
 
 #check if pi-config.txt file exist, exit script otherwise
 CONFIGPATH=pi-config.txt
-if [ -f "$CONFIGPATH" ]; then echo "### Config file is present."; else echo "### Config file is NOT present. Exiting Script"; exit 1; fi
+if [ -f "$CONFIGPATH" ]; then
+  echo "### Config file is present."
+else
+  echo "### Config file is NOT present. Exiting Script"; exit 1; fi
 
 #update system
 echo "### Updating System and Checking for required packages... "
@@ -16,18 +19,33 @@ sudo apt update -y
 
 #check if packages are installed, install the required packages if not
 REQPKG="qemu qemu-system-arm qemu-user-static util-linux systemd-container"
-for item in $REQPKG; do PKGCHECK=$(dpkg-query -W --showformat='${Status}\n' $item | grep "install ok installed")
-  if [ "$PKGCHECK" = "install ok installed" ]; then echo "### $item is installed."; else echo "### Installing $item" && sudo apt-get install $item -y; fi; done
+for item in $REQPKG;
+do
+  PKGCHECK=$(dpkg-query -W --showformat='${Status}\n' $item | grep "install ok installed")
+  if [ "$PKGCHECK" = "install ok installed" ]; then
+    echo "### $item is installed."
+  else
+    echo "### Installing $item" && sudo apt-get install $item -y
+  fi
+done
 
 #check if a RasPiOS Lite zip file exist, download the latest version if not
 ZIPPATH="$(pwd)/raspios_lite_armhf_latest"
 DOWNLOADPATH=$(pwd)
 RASPILATEST=https://downloads.raspberrypi.org/raspios_lite_armhf_latest
-if [ -f $ZIPPATH ]; then echo "### $ZIPPATH exist."; else wget -P $DOWNLOADPATH $RASPILATEST ; fi
+if [ -f $ZIPPATH ]; then
+  echo "### $ZIPPATH exist."
+else
+  wget -P $DOWNLOADPATH $RASPILATEST
+fi
 
 #check if a RasPiOS Lite image exist, inflate a downloaded file if not
 IMGPATH="$(pwd)/*raspios*lite*.img"
-if [ -f $IMGPATH ]; then echo "### $IMGPATH exist."; else unzip $ZIPPATH -d $DOWNLOADPATH ; fi
+if [ -f $IMGPATH ]; then
+  echo "### $IMGPATH exist."
+else
+  unzip $ZIPPATH -d $DOWNLOADPATH
+fi
 #example inflated image: 2020-05-27-raspios-buster-lite-armhf.img
 
 #make the partition available
