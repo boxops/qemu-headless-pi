@@ -17,7 +17,7 @@ sudo chmod 700 headless-pi-setup.sh qemu-system-arm.sh write-to-SD.sh
 ```
 The 'qemu-system-arm.sh' script will boot the configured RasPiOS in a qemu emulator. 
 
-Default RasPiOS credentials:
+#### Default RasPiOS credentials:
 
 username: **pi** 
 
