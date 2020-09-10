@@ -33,21 +33,16 @@ Once the script is done writing the image, remove the SD card and place it in a 
 
 Connect the pi to your network using an Ethernet cable and power on the device
 
-SSH into the Pi once it is booted up:
+#### SSH into the Pi once it is booted up:
 ```bash
 ssh pi@192.168.1.240
 ```
-Use the default credentials to login
+#### Use the default credentials to login
 
 #### It is important to resize the filesystem after connecting to the Raspberry Pi for the first time!
 
-To resize the OS on a Raspberry Pi:
-```bash
-sudo raspi-config
-```
-Select: Advanced Options > Expand Filesystem, then Finish and Reboot
+#### To resize the OS on a Raspberry Pi:
 
-Alternatively, resize the filesystem with commands:
 ```bash
 sudo raspi-config nonint do_expand_rootfs
 
