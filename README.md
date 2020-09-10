@@ -23,6 +23,12 @@ username: **pi**
 
 password: **raspberry**
 
+After testing and confirming changes, shutdown the emulator:
+
+```bash
+sudo shutdown now
+```
+
 #### Step 5. Run 'write-to-SD.sh' without an argument to write the modified RasPiOS image to an SD card: 
 ```bash
 ./write-to-SD.sh
