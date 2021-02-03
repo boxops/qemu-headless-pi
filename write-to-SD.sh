@@ -23,8 +23,14 @@ sudo udisksctl power-off -b $SDPATH
 #ssh pi@192.168.1.240
 #username: pi
 #password: raspberry
+
 #It is important to resize the filesystem after connecting to the Raspberry Pi for the first time
 #To resize the OS on a Raspberry Pi:
+
+#sudo raspi-config nonint do_expand_rootfs
+#sudo shutdown -r now
+
+#or
+
 #sudo raspi-config
 #Select: Advanced Options > Expand Filesystem, then Finish and Reboot
-
